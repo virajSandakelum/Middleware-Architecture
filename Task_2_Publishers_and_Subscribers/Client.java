@@ -3,15 +3,15 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
+
 public class Client {
 
-    private Socket clientSocket;
-    private PrintWriter reqout;
+    private Socket clientSocket; // TO STORE THE CLIENT SOCKET TO CONNECT TO THE SERVER
+    private PrintWriter reqout;  // TO STORE THE OBJECT TO SEND DATA TO THE SERVER
 
-    private BufferedReader in;
-    private BufferedReader stdIn;
+    private BufferedReader stdIn;   // TO STORE THE OBJECT THAT READ THE DATA FROM STANDARD INPUT
 
-    private static boolean isPublisher = false;
+    private static boolean isPublisher = false; // TO STORE THE WHETHER THE CLIENT IS PUBLISHER OR SUBCRIBER
 
 
     public void start(String host, int port) {
@@ -23,12 +23,14 @@ public class Client {
             in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             stdIn = new BufferedReader(new InputStreamReader(System.in));
 
+            // IF THE CLIENT IS PUBLISHER, GET THE INPUTS
             if(isPublisher){
                 reqout.println("Publisher");
                 String inputLine;
                 while ((inputLine = stdIn.readLine()) != null) {
                     out.println(inputLine);
                 }
+            // IF THE CLIENT IS SUBCRIBER DISPLAY THE MESSAGES
             } else {
                 reqout.println("subcriber");
                 String inputLine;
@@ -36,6 +38,7 @@ public class Client {
                     System.out.println(inputLine);
                 }
             }
+
         } catch (Exception error) {
             error.printStackTrace();
             System.out.println("Client Failed to connect");
@@ -44,6 +47,8 @@ public class Client {
         }
     }
 
+
+    // TERMINATE THE CONNECTION
     public void terminateConnection() {
         try {
             if (clientSocket != null)
@@ -60,15 +65,20 @@ public class Client {
     }
 
 
+    // MAIN FUNCTION
     public static void main(String[] args) {
+
+        // IF THE USER INPUT IS NOT COMPLETE
         if (args.length != 3) {
             System.out.println("Usage: java Client <host> <port> <client-type>");
             System.exit(1);
         }
 
+        // GET THE HOST ADDRESS AND PORT NUMBER
         String host = args[0];
         int port = Integer.parseInt(args[1]);
 
+        // CHECK WHETHER THE USER IS A PUBLISHER OR A SUBCRIBER
         switch (args[2].toUpperCase()) {
             case "PUBLISHER":
                 isPublisher = true;
@@ -82,6 +92,7 @@ public class Client {
                 return;
         }
 
+        // CREATE THE CLIENT OBJECT
         Client client = new Client();
         client.start(host, port);
     }
