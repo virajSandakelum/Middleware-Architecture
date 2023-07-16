@@ -29,7 +29,7 @@ public class Client {
                 reqout.println("Publisher");
                 String inputLine;
                 while ((inputLine = stdIn.readLine()) != null) {
-                    out.println(inputLine);
+                    reqout.println(inputLine);
                 }
             // IF THE CLIENT IS SUBCRIBER DISPLAY THE MESSAGES
             } else {
@@ -44,7 +44,7 @@ public class Client {
             error.printStackTrace();
             System.out.println("Client Failed to connect");
         } finally {
-            terminateConnection()
+            terminateConnection();
         }
     }
 
