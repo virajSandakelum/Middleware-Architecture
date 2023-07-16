@@ -6,11 +6,11 @@ import java.net.Socket; //This class implements client sockets (also called just
 public class Client {
 
     private Socket clientSocket; 
-    private PrintWriter out;
-    private BufferedReader in;
-    private BufferedReader stdIn;
-    private static boolean isPublisher = false;
-    private static String topic = "";
+    private PrintWriter out; //out is a PrintWriter object which is used to write the output to the socket
+    private BufferedReader in; //in is a BufferedReader object which is used to read the input from the socket
+    private BufferedReader stdIn; //stdIn is a BufferedReader object which is used to read the input from the console
+    private static boolean isPublisher = false; //isPublisher is a boolean variable which is used to check whether the client is a publisher or a subscriber
+    private static String topic = ""; //topic is the subject of the message
 
     public void start(String host, int port) {
         try {
@@ -22,15 +22,15 @@ public class Client {
             stdIn = new BufferedReader(new InputStreamReader(System.in)); //Creates a buffering character-input stream that uses a default-sized input buffer.
 
             String inputLine; 
-            if (isPublisher) {
-                out.println("publisher\n" + topic);
-                while ((inputLine = stdIn.readLine()) != null) {
-                    out.println(inputLine);
+            if (isPublisher) {   //if the client is a publisher
+                out.println("publisher\n" + topic); //Prints the message on the socket
+                while ((inputLine = stdIn.readLine()) != null) { //Reads the input from the console
+                    out.println(inputLine); //Prints the message on the socket
                 }
             } else {
-                out.println("subscriber\n" + topic);
-                while ((inputLine = in.readLine()) != null) {
-                    System.out.println(inputLine);
+                out.println("subscriber\n" + topic); //Prints the message on the socket
+                while ((inputLine = in.readLine()) != null) { //Reads the input from the socket
+                    System.out.println(inputLine);  //Prints the message on the console
                 }
             }
         } catch (Exception e) {
