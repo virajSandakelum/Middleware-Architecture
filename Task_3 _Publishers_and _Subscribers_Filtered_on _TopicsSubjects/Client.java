@@ -33,26 +33,26 @@ public class Client {
                     System.out.println(inputLine);  //Prints the message on the console
                 }
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("Client failed to connect");
-        } finally {
-            stop();
+        } catch (Exception e) { //catches the exception
+            e.printStackTrace(); //prints the stack trace
+            System.out.println("Client failed to connect");  //Prints the message on the console
+        } finally { //finally block is executed whether an exception is handled or not
+            stop();  
         }
     }
 
     public void stop() {
         try {
-            if (clientSocket != null)
-                clientSocket.close();
-            if (out != null)
-                out.close();
-            if (in != null)
-                in.close();
-            if (stdIn != null)
-                stdIn.close();
-        } catch (Exception e) {
-            e.printStackTrace();
+            if (clientSocket != null) //if the client socket is not null
+                clientSocket.close(); //closes the client socket
+            if (out != null)  //if the PrintWriter object is not null
+                out.close();  //closes the PrintWriter object
+            if (in != null)  //if the BufferedReader object is not null
+                in.close();  //closes the BufferedReader object
+            if (stdIn != null)  //if the BufferedReader object is not null
+                stdIn.close();  //closes the BufferedReader object
+        } catch (Exception e) { //catches the exception
+            e.printStackTrace(); //prints the stack trace
         }
     }
 
