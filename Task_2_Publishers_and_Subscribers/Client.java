@@ -55,8 +55,6 @@ public class Client {
                 clientSocket.close();
             if (out != null)
                 reqout.close();
-            if (in != null)
-                in.close();
             if (stdIn != null)
                 stdIn.close();
         } catch (Exception error) {
