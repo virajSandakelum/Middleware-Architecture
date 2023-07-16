@@ -20,67 +20,81 @@ public class Server {
             System.out.println("Server failed to start on port " + port);
         }
 
-        while(true){
-            try{
+        while (true) {
+            try {
                 Socket clientSocket = serverSocket.accept();
                 clientCount++;
-                ClientHandler client = new ClientHandler(clientSocket,clientCount);
+                ClientHandler client = new ClientHandler(clientSocket, clientCount);
                 clients.add(client);
 
                 Thread thread = new Thread(client);
                 thread.start();
-            }catch(Exception error){
+            } catch (Exception error) {
                 error.printStackTrace();
                 System.out.println("Client failed to connect");
             }
         }
     }
 
-    private class ClientHandler implements Runnable{
+    private class ClientHandler implements Runnable {
         private int id;
         private Socket clientSocket;
         private PrintWriter out;
         private BufferedReader in;
         private boolean isPublisher = false;
 
-        public ClientHandler(Socket clientSocket, int id){
+        public ClientHandler(Socket clientSocket, int id) {
             this.clientSocket = clientSocket;
             this.id = id;
-            System.out.println("Client"+ id+" connected");
+            System.out.println("Client" + id + " connected");
         }
 
-        public void run(){
-            try{
-                out = new PrintWriter(clientSocket.getOutputStream(),true);
+        public void run() {
+            try {
+                out = new PrintWriter(clientSocket.getOutputStream(), true);
                 in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
                 String inputLine = in.readLine();
-                System.out.println("Client"+id+" is a "+inputLine.toLowerCase());
+                System.out.println("Client" + id + " is a " + inputLine.toLowerCase());
                 isPublisher = inputLine.equalsIgnoreCase("PUBLISHER");
 
-                while((inputLine = in.readLine()) != null){
-                    String message = "Client"+id+" sent: "+ inputLine;
+                while ((inputLine = in.readLine()) != null) {
+                    String message = "Client" + id + " sent: " + inputLine;
                     System.out.println(message);
 
-                    if(isPublisher){
-                        for(ClientHandler client: clients){
-                            if(!client.isPublisher){
+                    if (isPublisher) {
+                        for (ClientHandler client : clients) {
+                            if (!client.isPublisher) {
                                 client.sendMessage(message);
                             }
                         }
                     }
                 }
-            }catch(Exception error){
+            } catch (Exception error) {
                 error.printStackTrace();
-            }finally{
-                
+            } finally {
+                terminalConnection();
             }
         }
 
-        public void sendMessage(String message){
+        public void sendMessage(String message) {
             out.println(message);
+        }
+
+        public void terminalConnection() {
+            try {
+                if (in != null)
+                    in.close();
+                if (out != null)
+                    out.close();
+                if (clientSocket != null)
+                    clientSocket.close();
+
+                clients.remove(this);
+                System.out.println("Client" + id + "disconnected");
+            } catch (Exception error) {
+                error.printStackTrace();
+            }
         }
     }
 }
-
-
