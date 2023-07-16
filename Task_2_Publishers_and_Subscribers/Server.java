@@ -23,6 +23,7 @@ public class Server {
         while(true){
             try{
                 Socket clientSocket = serverSocket.accept();
+                clientCount++;
                 ClientHandler client = new ClientHandler(clientSocket,clientCount);
                 clients.add(client);
 
@@ -61,9 +62,23 @@ public class Server {
                     String message = "Client"+id+" sent: "+ inputLine;
                     System.out.println(message);
 
-                    
+                    if(isPublisher){
+                        for(ClientHandler client: clients){
+                            if(!client.isPublisher){
+                                client.sendMessage(message);
+                            }
+                        }
+                    }
                 }
+            }catch(Exception error){
+                error.printStackTrace();
+            }finally{
+                
             }
+        }
+
+        public void sendMessage(String message){
+            out.println(message);
         }
     }
 }
