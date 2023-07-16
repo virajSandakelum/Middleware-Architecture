@@ -56,31 +56,31 @@ public class Client {
         }
     }
 
-    public static void main(String[] args) {
-        if (args.length != 4) {
+    public static void main(String[] args) {  //main method
+        if (args.length != 4) {  //if the number of arguments is not equal to 4
             System.out.println("Usage: java Client <host> <port> <client-type>");
-            System.exit(1);
+            System.exit(1);  //exits the program
         }
 
-        String host = args[0];
-        int port = Integer.parseInt(args[1]);
+        String host = args[0];  //host is the IP address of the server
+        int port = Integer.parseInt(args[1]);  //port is the port number of the server
 
-        switch (args[2].toLowerCase()) {
-            case "publisher":
+        switch (args[2].toLowerCase()) {  //switch case
+            case "publisher":    //if the client is a publisher
                 isPublisher = true;
                 break;
-            case "subscriber":
+            case "subscriber":   //if the client is a subscriber
                 isPublisher = false;
                 break;
-            default:
+            default:  //if the client is neither a publisher nor a subscriber
                 System.out.println("Usage: java Client <host> <port> <client-type>");
-                System.exit(1);
+                System.exit(1);  //exits the program
                 return;
         }
 
-        topic = args[3].toLowerCase();
+        topic = args[3].toLowerCase();  //topic is the subject of the message
 
-        Client client = new Client();
-        client.start(host, port);
+        Client client = new Client();  //creates a new Client object
+        client.start(host, port);   //calls the start method
     }
 }
