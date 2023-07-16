@@ -8,7 +8,8 @@ public class Client {
 
     private Socket clientSocket; // TO STORE THE CLIENT SOCKET TO CONNECT TO THE SERVER
     private PrintWriter reqout;  // TO STORE THE OBJECT TO SEND DATA TO THE SERVER
-
+    
+    private BufferedReader in;      // TO STORE THE OBJECT THAT READ THE DATA FROM SERVER
     private BufferedReader stdIn;   // TO STORE THE OBJECT THAT READ THE DATA FROM STANDARD INPUT
 
     private static boolean isPublisher = false; // TO STORE THE WHETHER THE CLIENT IS PUBLISHER OR SUBCRIBER
@@ -53,8 +54,10 @@ public class Client {
         try {
             if (clientSocket != null)
                 clientSocket.close();
-            if (out != null)
+            if (reqout != null)
                 reqout.close();
+            if (in != null)
+                in.close();
             if (stdIn != null)
                 stdIn.close();
         } catch (Exception error) {
