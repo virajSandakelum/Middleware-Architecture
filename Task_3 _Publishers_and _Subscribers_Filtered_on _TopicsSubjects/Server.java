@@ -74,7 +74,7 @@ public class Server {
             } catch (Exception error) {
                 error.printStackTrace(); 
             } finally {
-                terminalConnection(); // close the connection
+                terminateConnection(); // close the connection
             }
         }
 
@@ -82,7 +82,7 @@ public class Server {
             out.println(message); // send the message to the client
         }
 
-        public void terminalConnection() {  // close the connection
+        public void terminateConnection() {  // close the connection
             try {
                 if (in != null)    
                     in.close(); 
@@ -94,7 +94,7 @@ public class Server {
                 clients.remove(this); // remove the client from the list
                 System.out.println("Client" + id + "disconnected");
             } catch (Exception error) { 
-                system.out.println("Client" + id + "failed to disconnect");
+                System.out.println("Client" + id + "failed to disconnect");
             }
         }
     }
