@@ -69,7 +69,7 @@ public class Server {
                 topic = in.readLine(); // get the toipc from the client
 
                 while ((inputLine = in.readLine()) != null) {
-                    String message = "Publisher " + id + " sent: " + inputLine;
+                    String message = "Client " + id + " (Publisher) sent: " + inputLine;
                     System.out.println(message + " |=> topic : " + topic); // print the message and topic
 
                     if (isPublisher) { // if the client is a publisher then send the message to all the subscribers
