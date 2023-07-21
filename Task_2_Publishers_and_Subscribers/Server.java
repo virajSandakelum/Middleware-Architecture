@@ -16,7 +16,7 @@ public class Server {
             serverSocket = new ServerSocket(port); // handle the communication with client, perform on the client's socket
             System.out.println("Server started on port " + port);
         } catch (Exception error) {
-            error.printStackTrace();
+//            error.printStackTrace();
             System.out.println("Server failed to start on port " + port);
         }
 
@@ -30,7 +30,7 @@ public class Server {
                 Thread thread = new Thread(client); // created client, running in Parallel manner
                 thread.start();
             } catch (Exception error) {
-                error.printStackTrace();
+//                error.printStackTrace();
                 System.out.println("Client failed to connect");
             }
         }
@@ -73,7 +73,7 @@ public class Server {
                     }
                 }
             } catch (Exception error) {
-                error.printStackTrace();
+//                error.printStackTrace();
             } finally {
                 terminateConnection(); // terminal the connection
             }
@@ -95,7 +95,7 @@ public class Server {
                 clients.remove(this);
                 System.out.println("Client" + id + "disconnected");
             } catch (Exception error) {
-                error.printStackTrace();
+//                error.printStackTrace();
             }
         }
     }

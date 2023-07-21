@@ -29,14 +29,18 @@ public class Client {
                 reqout.println("Publisher");
                 String inputLine;
                 while ((inputLine = stdIn.readLine()) != null) {
+                    if (inputLine.equalsIgnoreCase("terminate")) {
+                        System.out.println("Client: terminating");
+                        break;
+                    }
                     reqout.println(inputLine);
                 }
             // IF THE CLIENT IS SUBCRIBER DISPLAY THE MESSAGES
             } else {
                 reqout.println("subcriber");
-                String inputLine;
-                while ((inputLine = in.readLine()) != null) {
-                    System.out.println(inputLine);
+                String outputLine;
+                while ((outputLine = in.readLine()) != null) {
+                    System.out.println(outputLine);
                 }
             }
 

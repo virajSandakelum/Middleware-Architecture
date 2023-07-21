@@ -25,6 +25,10 @@ public class Client {
             if (isPublisher) {   //if the client is a publisher
                 out.println("publisher\n" + topic); //Prints the message on the socket
                 while ((inputLine = stdIn.readLine()) != null) { //Reads the input from the console
+                    if (inputLine.equalsIgnoreCase("terminate")) {
+                        System.out.println("Client: terminating");
+                        break;
+                    }
                     out.println(inputLine); //Prints the message on the socket
                 }
             } else {
@@ -34,7 +38,7 @@ public class Client {
                 }
             }
         } catch (Exception e) { //catches the exception
-            e.printStackTrace(); //prints the stack trace
+//            e.printStackTrace(); //prints the stack trace
             System.out.println("Client failed to connect");  //Prints the message on the console
         } finally { //finally block is executed whether an exception is handled or not
             stop();  
@@ -52,7 +56,7 @@ public class Client {
             if (stdIn != null)  //if the BufferedReader object is not null
                 stdIn.close();  //closes the BufferedReader object
         } catch (Exception e) { //catches the exception
-            e.printStackTrace(); //prints the stack trace
+//            e.printStackTrace(); //prints the stack trace
         }
     }
 
